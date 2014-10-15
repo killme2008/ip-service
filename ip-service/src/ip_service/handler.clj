@@ -76,7 +76,7 @@
 (defonce ip-data (init))
 
 (defn find-geography [ip]
-  (when (> (count (cs/split ip #"\.")) 4)
+  (when-not (= (count (cs/split ip #"\.")) 4)
     (throw (ex-info "Only supports IPv4." {:ip ip})))
   (let [ip-head (-> ip (cs/split #"\.") first (Integer/parseInt))
         ipn (ip->long ip)
