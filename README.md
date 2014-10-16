@@ -5,7 +5,7 @@
 * [version-0](https://github.com/killme2008/ip-service/tree/master/version-0) `lein new compojure ip-service` 的 hello world项目
 * [version-1](https://github.com/killme2008/ip-service/tree/master/version-1) 实现基础功能
 * [version-2](https://github.com/killme2008/ip-service/tree/master/version-2) 添加单元测试，拆分模块
-* [ip-service](https://github.com/killme2008/ip-service/tree/master/17monipdb) 最终“成品”，添加 Jetty Server 启动和启动脚本，以及 web driver 集成测试演示
+* [ip-service](https://github.com/killme2008/ip-service/tree/master/ip-service) 最终“成品”，添加 Jetty Server 启动和启动脚本，以及 web driver 集成测试演示
 
 ## 运行
 
@@ -49,6 +49,6 @@ $ ruby test_scripts/test_main.rb
 
 ## License
 
-IP 库的版权遵循 [17mon](http://tool.17mon.cn/) 自身协议。
+IP 库的版权遵循 [17mon](http://tool.17mon.cn/) 自身协议，类库遵循各类库协议。
 
-Clojure 代码您可以任意使用。
+项目源码遵循 [WTFPL – Do What the Fuck You Want to Public License](http://www.wtfpl.net/)
