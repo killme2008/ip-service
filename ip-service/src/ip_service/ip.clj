@@ -75,39 +75,40 @@
 ;; An atom to keep IP database.
 (defonce ip-data (init))
 
-(defn find-geography [ip]
-  (when (or (empty? ip) (not= (count (cs/split ip #"\.")) 4))
-    (throw (ex-info "Illegal address,only supports IPv4." {:ip ip})))
-  (let [ip-head (-> ip (cs/split #"\.") first (Integer/parseInt))
-        ipn (ip->long ip)
-        {:keys [buf data-len]} ip-data
-        ;;make a copy of buffer for thread-safe
-        buf (.duplicate buf)
-        start (-> buf
-                  (get-int (+ 4 (* 4 ip-head)) ByteOrder/LITTLE_ENDIAN)
-                  (* 8)
-                  (+ 4)
-                  (+ 1024))
-        max-comp-len (- data-len 1024 4)]
-    (some
-     (fn [{:keys [ip-num offset-bs size]}]
-       (when (>= ip-num ipn)
-         (let [offset (-> offset-bs
-                          (vec)
-                          (conj 0) ;;Padding zero at end.
-                          (byte-array)
-                          (ByteBuffer/wrap)
-                          (.order ByteOrder/LITTLE_ENDIAN)
-                          (.getInt))]
-           (if (<= offset 0)
-             (throw (ex-info "Invalid result offset." {:offset offset}))
-             (decode (string "utf-8" :length size)
-                     (buffer-stream
-                      (.position buf
-                                 (-> offset (+ data-len) (- 1024)))))))))
-     (decode ip-codec
-             (buffer-stream
-              (-> buf
-                  (.duplicate)
-                  (.order ByteOrder/BIG_ENDIAN)
-                  (.position start)))))))
+(def find-geography
+  (memoize (fn [ip]
+             (when (or (empty? ip) (not= (count (cs/split ip #"\.")) 4))
+               (throw (ex-info "Illegal address,only supports IPv4." {:ip ip})))
+             (let [ip-head (-> ip (cs/split #"\.") first (Integer/parseInt))
+                   ipn (ip->long ip)
+                   {:keys [buf data-len]} ip-data
+                   ;;make a copy of buffer for thread-safe
+                   buf (.duplicate buf)
+                   start (-> buf
+                             (get-int (+ 4 (* 4 ip-head)) ByteOrder/LITTLE_ENDIAN)
+                             (* 8)
+                             (+ 4)
+                             (+ 1024))
+                   max-comp-len (- data-len 1024 4)]
+               (some
+                (fn [{:keys [ip-num offset-bs size]}]
+                  (when (>= ip-num ipn)
+                    (let [offset (-> offset-bs
+                                     (vec)
+                                     (conj 0) ;;Padding zero at end.
+                                     (byte-array)
+                                     (ByteBuffer/wrap)
+                                     (.order ByteOrder/LITTLE_ENDIAN)
+                                     (.getInt))]
+                      (if (<= offset 0)
+                        (throw (ex-info "Invalid result offset." {:offset offset}))
+                        (decode (string "utf-8" :length size)
+                                (buffer-stream
+                                 (.position buf
+                                            (-> offset (+ data-len) (- 1024)))))))))
+                (decode ip-codec
+                        (buffer-stream
+                         (-> buf
+                             (.duplicate)
+                             (.order ByteOrder/BIG_ENDIAN)
+                             (.position start)))))))))
