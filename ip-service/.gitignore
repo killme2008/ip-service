@@ -5,6 +5,7 @@
 pom.xml
 pom.xml.asc
 *.jar
+nohup.out
 *.class
 /.lein-*
 /.nrepl-port

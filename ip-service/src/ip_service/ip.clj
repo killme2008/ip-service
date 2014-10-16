@@ -50,7 +50,10 @@
   (let [^FileChannel fc
         (->
          (FileInputStream.
-          (io/file (io/resource "17monipdb.dat")))
+          (io/file
+           (or
+            (System/getProperty "ip-service.db")
+            (io/resource "17monipdb.dat"))))
          (.getChannel))]
     (.map fc FileChannel$MapMode/READ_ONLY 0 (.size fc))))
 
