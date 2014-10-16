@@ -1,0 +1,39 @@
+<html>
+<link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.2.0/css/bootstrap.min.css" type="text/css" media="screen" />
+<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.js"></script>
+
+<script type="text/javascript">
+{{#if result}}
+  $(document).ready(function () {
+    $('.alert-success').show();
+   });
+{{/if}}
+{{#if error}}
+  $(document).ready(function () {
+    $('.alert-danger').show();
+   });
+{{/if}}
+</script>
+
+<body>
+  <div class="container">
+    <form class="navbar-form navbar-left" role="search" action="/" method="GET">
+      <div class="caption">
+          <h2>IP Service</h2>
+      </div>
+     <div class="alert alert-danger" role="alert" style="display:none">
+         {{error}}
+     </div>
+
+     <div class="alert alert-success" role="alert" style="display:none">
+         {{ip}}  &nbsp;&nbsp;&nbsp;   {{result}}
+     </div>
+
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="IPv4" name='ip'>
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+  </div>
+</body>
+</html>
