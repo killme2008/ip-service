@@ -2,7 +2,7 @@
 
 一个 Clojure 开发 REST API 的简单项目，使用 [17mon](http://tool.17mon.cn/) 提供的 IP 库提供一个 IP 地理位置信息查询。
 
-在线演示：[https://github.com/killme2008/ip-service](https://github.com/killme2008/ip-service)
+在线演示：[http://ip.fnil.net/](http://ip.fnil.net/)
 
 目录介绍:
 
