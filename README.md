@@ -1,11 +1,21 @@
 ## 简介
 
-一个 Clojure 开发 REST API 的简单项目，使用 [17mon](http://tool.17mon.cn/) 提供的 IP 库提供一个 IP 地理位置信息查询。目录介绍:
+一个 Clojure 开发 REST API 的简单项目，使用 [17mon](http://tool.17mon.cn/) 提供的 IP 库提供一个 IP 地理位置信息查询。
+
+在线演示：[https://github.com/killme2008/ip-service](https://github.com/killme2008/ip-service)
+
+目录介绍:
 
 * [version-0](https://github.com/killme2008/ip-service/tree/master/version-0) `lein new compojure ip-service` 的 hello world项目
 * [version-1](https://github.com/killme2008/ip-service/tree/master/version-1) 实现基础功能
 * [version-2](https://github.com/killme2008/ip-service/tree/master/version-2) 添加单元测试，拆分模块
 * [ip-service](https://github.com/killme2008/ip-service/tree/master/ip-service) 最终“成品”，添加 Jetty Server 启动和启动脚本，以及 web driver 集成测试演示
+
+
+## 依赖
+
+* JDK 6+
+* [Leiningen](https://github.com/technomancy/leiningen)
 
 ## 运行
 
